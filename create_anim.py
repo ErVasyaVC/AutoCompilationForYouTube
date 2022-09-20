@@ -7,7 +7,16 @@ import data_base
 # print(countries)
 contr = 'United States of America'
 
+data_frame, columns = data_base.ReadDataFrame()
 
+years = []
+amount = []
+for i in data_frame[data_frame[columns[0]] == contr][columns[1]]:
+    years.append(int(i))
+for i in data_frame[data_frame[columns[0]] == contr][columns[2]]:
+    amount.append(int(i.split(',')[0]+i.split(',')[1]))
+print(years)
+print(amount)
 
 
 plt.plot([1, 2, 3, 4], [1, 4, 9, 16], 'ro')
