@@ -4,28 +4,29 @@ import numpy as np
 import data_base
 
 
-contr = 'United States of America'
+def SetSetting():
+    plt.title("Количество туристов")
+    plt.axis([0, 1, 0.5, 5.5])
 
+fps = 24
+time = 5
+time_shot = round(1 / fps, 3)
 
-years, amount = data_base.SortForCountries(contr)
-
-data = data_base.SortForCountries(contr)
-print(data)
-# plt.axis([0, 100000, 0.5, 5.5])
-# for i in range(amount[0], amount[-1], 100):
+# for i in range(fps * time):
 #     plt.clf()
-#     plt.axis([0, i, 0.5, 5.5])
-#     plt.ylabel('Количество турисов')
-#     y = i
-#     x = 1
-#     plt.barh(x, y)
-#     plt.barh(2, 40000)
-#     plt.barh(3, 30000)
-#     plt.barh(4, 20000)
-#     plt.barh(5, 10000)
-#     plt.pause(0.01)
+#     SetSetting()
+#     years = 0
 #
 #
-# plt.ylabel('Количество турисов')
+#     # plt.axis([0, i , 0.5, 5.5])
+#     # plt.ylabel('Количество турисов')
+#     # y = i
+#     # x = 1
 #
+#     # plt.barh(x, y)
+#     # plt.barh(2, 40000)
+#     # plt.barh(3, 30000)
+#     # plt.barh(4, 20000)
+#     # plt.barh(5, 10000)
+#     plt.pause(time_shot)
 # plt.show()
