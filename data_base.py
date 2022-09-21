@@ -2,7 +2,6 @@ import pandas as pd
 
 data_file = 'SYB64_176_202110_Tourist-Visitors Arrival and Expenditure.csv'
 
-
 def ReadDataFrame():
     data_frame = pd.read_csv(data_file, encoding='latin-1')
     columns = data_frame.columns
@@ -22,4 +21,18 @@ def NameCountries():
             last_country = country
     #name_countr_
     return countries
+
+
+def SortForCountries(countries):
+    data = ReadDataFrame()
+    data_frame = data[0]
+    years = []
+    amount = []
+    for i in countries:
+    for year in data_frame[data_frame[data[1][0]] == countries][data[1][1]]:
+        years.append(int(year))
+    for count in data_frame[data_frame[data[1][0]] == countries][data[1][2]]:
+        amount.append(int(count.split(',')[0] + count.split(',')[1]))
+
+    return years, amount
 

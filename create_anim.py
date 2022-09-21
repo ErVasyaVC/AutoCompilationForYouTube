@@ -1,28 +1,31 @@
+import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import numpy as np
 import data_base
 
-# print(data_base.NameCountries())
-# countries = input("Countries: ").split(' ')
-# print(countries)
+
 contr = 'United States of America'
 
-data_frame, columns = data_base.ReadDataFrame()
 
-years = []
-amount = []
-for i in data_frame[data_frame[columns[0]] == contr][columns[1]]:
-    years.append(int(i))
-for i in data_frame[data_frame[columns[0]] == contr][columns[2]]:
-    amount.append(int(i.split(',')[0]+i.split(',')[1]))
-print(years)
-print(amount)
+years, amount = data_base.SortForCountries(contr)
 
-
-plt.plot([1, 2, 3, 4], [1, 4, 9, 16], 'ro')
-
-plt.plot([1, 2, 3, 3], [1, 4, 9, 16], 'ro')
-plt.ylabel('some numbers')
-plt.axis([0, 6, 0, 20])
-#plt.show()
-
+data = data_base.SortForCountries(contr)
+print(data)
+# plt.axis([0, 100000, 0.5, 5.5])
+# for i in range(amount[0], amount[-1], 100):
+#     plt.clf()
+#     plt.axis([0, i, 0.5, 5.5])
+#     plt.ylabel('Количество турисов')
+#     y = i
+#     x = 1
+#     plt.barh(x, y)
+#     plt.barh(2, 40000)
+#     plt.barh(3, 30000)
+#     plt.barh(4, 20000)
+#     plt.barh(5, 10000)
+#     plt.pause(0.01)
+#
+#
+# plt.ylabel('Количество турисов')
+#
+# plt.show()
