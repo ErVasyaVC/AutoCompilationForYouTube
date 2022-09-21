@@ -2,6 +2,8 @@ import pandas as pd
 
 data_file = 'SYB64_176_202110_Tourist-Visitors Arrival and Expenditure.csv'
 contr = ['United States of America', 'Japan']
+
+
 def ReadDataFrame():
     data_frame = pd.read_csv(data_file, encoding='latin-1')
     columns = data_frame.columns
@@ -37,8 +39,7 @@ def SortForCountries(countries):
     return years_countries
 
 
-def MinMaxYears():
-    data = SortForCountries()
+def MinMaxYears(data):
     min_year = []
     max_year = []
     for country_data in data:
@@ -49,18 +50,13 @@ def MinMaxYears():
 
 def SortYears():
     data = SortForCountries(contr)
-    print(data)
-
     mn_year, mx_year = MinMaxYears(data)
-    mn_year = 1996
-    mx_year = 2022
-
     for num_country in range(len(data)):
         del_num_years = []
         for num_year in range(len(data[num_country][0])):
-            if not(mn_year <= data[num_country][0][num_year] <= mx_year):
+            if not (mn_year <= data[num_country][0][num_year] <= mx_year):
                 del_num_years.append(num_year)
-        for i in del_num_years:
+        for i in del_num_years[-1::-1]:
             data[num_country][0].pop(i)
             data[num_country][1].pop(i)
-
+    return data

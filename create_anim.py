@@ -12,6 +12,8 @@ fps = 24
 time = 5
 time_shot = round(1 / fps, 3)
 
+data = data_base.SortYears()
+print(data)
 # for i in range(fps * time):
 #     plt.clf()
 #     SetSetting()
