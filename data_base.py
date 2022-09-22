@@ -1,7 +1,10 @@
 import pandas as pd
+import json
 
-data_file = 'SYB64_176_202110_Tourist-Visitors Arrival and Expenditure.csv'
-contr = ['United States of America', 'Japan']
+with open('config.json', 'r') as json_file:
+    config = json.load(json_file)
+    list_of_countries = config['list_of_countries']
+    data_file = config['data_file']
 
 
 def ReadDataFrame():
@@ -49,7 +52,7 @@ def MinMaxYears(data):
 
 
 def SortYears():
-    data = SortForCountries(contr)
+    data = SortForCountries(list_of_countries)
     mn_year, mx_year = MinMaxYears(data)
     for num_country in range(len(data)):
         del_num_years = []

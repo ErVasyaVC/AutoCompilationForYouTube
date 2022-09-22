@@ -1,0 +1,9 @@
+{
+  "data_file": "name_file.csv",
+  "list_of_countries": [
+    "United States of America",
+    "Japan"
+  ],
+  "fps": 24,
+  "seconds": 10
+}
