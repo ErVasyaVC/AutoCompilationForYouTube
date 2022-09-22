@@ -6,9 +6,9 @@ from celluloid import Camera
 import json
 
 
-def SetSetting(year):
+def SetSetting(year, i):
     plt.title(year)
-    plt.axis([0, 80000, 0.5, 5.5])
+    plt.axis([0, i, 0.5, 5.5])
 
 
 with open('config.json', 'r') as json_file:
@@ -59,7 +59,7 @@ for shot in range(fps * seconds):
     for i in range(len(speed_amount)):
         list_y_cord[i] += speed_amount[i]
         plt.barh(i+1, list_y_cord[i])
-    SetSetting(passed_years + min_year)
+    SetSetting(passed_years + min_year, max(list_y_cord))
 
     plt.pause(time_shot)
 
