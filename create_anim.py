@@ -3,9 +3,9 @@ import data_base
 import json
 
 
-def SetSetting(year, i):
+def SetSetting(year, amount_countries, i):
     plt.title(label=year, loc='right', fontsize=20, fontweight='bold', pad=-200)
-    plt.axis([0, 90000, 0.5, 5.5])
+    plt.axis([0, i, 0.5, amount_countries + 0.5])
 
     ax = plt.subplot()
     ax.set_title(label=year, y=-1, pad=-280, fontsize=20)
@@ -15,10 +15,10 @@ def SetSetting(year, i):
     ax.spines.top.set_visible(False)
     ax.spines.left.set_visible(False)
     ax.spines.bottom.set_visible(False)
-    ratio = 2
-    x_left, x_right = ax.get_xlim()
-    y_low, y_high = ax.get_ylim()
-    ax.set_aspect(abs((x_right - x_left) / (y_low - y_high)) * ratio)
+    # ratio = 2
+    # x_left, x_right = ax.get_xlim()
+    # y_low, y_high = ax.get_ylim()
+    # ax.set_aspect(abs((x_right - x_left) / (y_low - y_high)) * ratio)
 
 
 def SortDescending(array_amount):
@@ -48,7 +48,7 @@ speed_year = (max_year - min_year) / (fps * seconds)
 speed_amount = list()
 last_year, speed_amount, list_y_cord = [0 for i in range(len(data))], [0 for i in range(len(data))], \
                                        [0 for i in range(len(data))]
-speed_rearrangement = 0.1
+speed_rearrangement = 0.05
 
 for shot in range(fps * seconds):
     plt.clf()
@@ -83,7 +83,7 @@ for shot in range(fps * seconds):
 
     passed_years = round(float_year // 1)
     float_year += speed_year
-    SetSetting(passed_years + min_year, max(list_y_cord))
+    SetSetting(passed_years + min_year, len(data), max(list_y_cord))
 
     plt.pause(time_shot)
 
