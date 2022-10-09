@@ -1,12 +1,11 @@
 import matplotlib.pyplot as plt
 import data_base
-from celluloid import Camera
 import json
 
 
 def SetSetting(year, i):
     plt.title(label=year, loc='right', fontsize=20, fontweight='bold', pad=-200)
-    plt.axis([0, i, 0.5, 5.5])
+    plt.axis([0, 90000, 0.5, 5.5])
 
     ax = plt.subplot()
     ax.set_title(label=year, y=-1, pad=-280, fontsize=20)
@@ -16,11 +15,10 @@ def SetSetting(year, i):
     ax.spines.top.set_visible(False)
     ax.spines.left.set_visible(False)
     ax.spines.bottom.set_visible(False)
-    # ratio = 2
-    # x_left, x_right = ax.get_xlim()
-    # y_low, y_high = ax.get_ylim()
-    # ax.set_aspect(abs((x_right - x_left) / (y_low - y_high)) * ratio)
-
+    ratio = 2
+    x_left, x_right = ax.get_xlim()
+    y_low, y_high = ax.get_ylim()
+    ax.set_aspect(abs((x_right - x_left) / (y_low - y_high)) * ratio)
 
 
 def SortDescending(array_amount):
@@ -50,6 +48,7 @@ speed_year = (max_year - min_year) / (fps * seconds)
 speed_amount = list()
 last_year, speed_amount, list_y_cord = [0 for i in range(len(data))], [0 for i in range(len(data))], \
                                        [0 for i in range(len(data))]
+speed_rearrangement = 0.1
 
 for shot in range(fps * seconds):
     plt.clf()
@@ -65,10 +64,21 @@ for shot in range(fps * seconds):
                 break
         list_y_cord[num_country] += speed_amount[num_country]
 
-    list_x_cord = SortDescending(list_y_cord)
+    true_list_x_cord = SortDescending(list_y_cord)
+
+    if shot == 0:
+        now_list_x_cord = true_list_x_cord.copy()
+
     for num_country in range(len(data)):
-        plt.barh(list_x_cord[num_country] + 1, list_y_cord[num_country], color=colors[num_country])
-        plt.text(0, list_x_cord[num_country] + 1, data_base.list_of_countries[num_country],
+        if abs(now_list_x_cord[num_country] - true_list_x_cord[num_country]) < 0.05:
+            now_list_x_cord[num_country] = true_list_x_cord[num_country]
+        elif now_list_x_cord[num_country] > true_list_x_cord[num_country]:
+            now_list_x_cord[num_country] -= speed_rearrangement
+        elif now_list_x_cord[num_country] < true_list_x_cord[num_country]:
+            now_list_x_cord[num_country] += speed_rearrangement
+
+        plt.barh(now_list_x_cord[num_country] + 1, list_y_cord[num_country], color=colors[num_country])
+        plt.text(list_y_cord[num_country], now_list_x_cord[num_country] + 1, data_base.list_of_countries[num_country],
                  fontsize=11)
 
     passed_years = round(float_year // 1)
@@ -77,6 +87,5 @@ for shot in range(fps * seconds):
 
     plt.pause(time_shot)
 
-
-#plt.savefig('filename.png', dpi=500)
+# plt.savefig('filename.png', dpi=500)
 plt.show()
