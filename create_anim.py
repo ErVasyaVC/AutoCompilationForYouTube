@@ -1,20 +1,21 @@
-import matplotlib.pyplot as plt
 import data_base
 import json
+import matplotlib.pyplot as plt
+from mpl_toolkits.axisartist.axislines import Subplot
 
 
 def SetSetting(year, amount_countries, i):
     plt.title(label=year, loc='right', fontsize=20, fontweight='bold', pad=-200)
-    plt.axis([0, i, 0.5, amount_countries + 0.5])
-
-    ax = plt.subplot()
-    ax.set_title(label=year, y=-1, pad=-280, fontsize=20)
+    plt.axis([0, i+20000, 0.5, amount_countries + 0.5])
+    ax.set_title(label=year, y=-1, pad=-480, fontsize=20)
     ax.invert_yaxis()
     ax.xaxis.tick_top()
     ax.spines.right.set_visible(False)
     ax.spines.top.set_visible(False)
     ax.spines.left.set_visible(False)
     ax.spines.bottom.set_visible(False)
+
+
     # ratio = 2
     # x_left, x_right = ax.get_xlim()
     # y_low, y_high = ax.get_ylim()
@@ -50,8 +51,15 @@ last_year, speed_amount, list_y_cord = [0 for i in range(len(data))], [0 for i i
                                        [0 for i in range(len(data))]
 speed_rearrangement = 0.05
 
+fig = plt.figure()
+fig.set_size_inches(6.5, 8)
+ax = Subplot(fig, 111)
+
+
 for shot in range(fps * seconds):
     plt.clf()
+    ax = fig.add_subplot(111)
+
     for num_country in range(len(data)):
         for num_year in range(len(data[num_country][0])):
             if min_year + passed_years == data[num_country][0][num_year] and last_year[num_country] != \
@@ -66,9 +74,12 @@ for shot in range(fps * seconds):
 
     true_list_x_cord = SortDescending(list_y_cord)
 
+
+
+
     if shot == 0:
         now_list_x_cord = true_list_x_cord.copy()
-
+    SetSetting(passed_years + min_year, len(data), max(list_y_cord))
     for num_country in range(len(data)):
         if abs(now_list_x_cord[num_country] - true_list_x_cord[num_country]) < 0.05:
             now_list_x_cord[num_country] = true_list_x_cord[num_country]
@@ -78,14 +89,14 @@ for shot in range(fps * seconds):
             now_list_x_cord[num_country] += speed_rearrangement
 
         plt.barh(now_list_x_cord[num_country] + 1, list_y_cord[num_country], color=colors[num_country])
-        plt.text(list_y_cord[num_country], now_list_x_cord[num_country] + 1, data_base.list_of_countries[num_country],
+        plt.text(list_y_cord[num_country]+1000, now_list_x_cord[num_country] + 1, data_base.list_of_countries[num_country],
                  fontsize=11)
 
     passed_years = round(float_year // 1)
     float_year += speed_year
-    SetSetting(passed_years + min_year, len(data), max(list_y_cord))
-
-    plt.pause(time_shot)
+    plt.pause(0.01)
 
 # plt.savefig('filename.png', dpi=500)
 plt.show()
+plt.pause(5)
+plt.close()
