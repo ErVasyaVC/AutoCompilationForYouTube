@@ -7,7 +7,7 @@ from mpl_toolkits.axisartist.axislines import Subplot
 def SetSetting(year, amount_countries, i):
     plt.title(label="Amount of tourists", loc='left', fontsize=20, fontweight='bold')
     #ax.set_title(label="Title", pad=-1, fontsize=16, loc='left')
-    ax.axis([0, (i + 10000) / 1000, 0.5, 20 + 0.5])
+    ax.axis([0, (i + 10000) / 1000, 0.5, count_countries + 0.5])
     ax.set_xlabel(year, x=0.95, fontsize=40, fontweight='bold', color='red')
     ax.invert_yaxis()
     ax.xaxis.tick_top()
@@ -57,6 +57,7 @@ with open('config.json', 'r') as json_file:
     fps = config['fps']
     seconds = config['seconds']
     colors = config['colors']
+    count_countries = config['count_countries']
 
 time_shot = round(1 / fps, 3)
 data = data_base.SortYears()
@@ -73,6 +74,7 @@ fig = plt.figure()
 fig.set_size_inches(6.5, 8)
 ax = Subplot(fig, 111)
 
+a = []
 
 for shot in range(fps * seconds):
     plt.clf()
@@ -105,13 +107,15 @@ for shot in range(fps * seconds):
         elif now_list_x_cord[num_country] < true_list_x_cord[num_country]:
             now_list_x_cord[num_country] += speed_rearrangement
         srt_num = StrAmount(list_y_cord[num_country])
-        if(now_list_x_cord[num_country] + 1 <= 20.5):
-            plt.barh(now_list_x_cord[num_country] + 1, list_y_cord[num_country] / 1000, color='red',#color=colors[num_country],
+        if now_list_x_cord[num_country] + 1 <= count_countries + 0.5:
+            plt.barh(now_list_x_cord[num_country] + 1, list_y_cord[num_country] / 1000, color=colors[num_country],
                      alpha=0.7)
             plt.text((list_y_cord[num_country] + 1000) / 1000, now_list_x_cord[num_country] + 1,
                      srt_num, fontsize=9)
             plt.text(-0.5, now_list_x_cord[num_country] + 1,
                      data_base.list_of_countries[num_country], fontsize=10, horizontalalignment='right')
+            if not data_base.list_of_countries[num_country] in a:
+                a.append(data_base.list_of_countries[num_country])
 
     passed_years = round(float_year // 1)
     float_year += speed_year
@@ -119,15 +123,18 @@ for shot in range(fps * seconds):
 
 # plt.savefig('filename.png', dpi=500)
 plt.show()
-plt.pause(5)
+plt.pause(2)
 plt.close()
 
-# a = ['Albania', 'Algeria', 'Andorra', 'Argentina', 'Australia', 'Austria', 'Bahamas', 'Bahrain', 'Belarus', 'Belgium', 'Botswana', 'Brazil', 'Bulgaria', 'Cambodia', 'Canada', 'Chile', 'China', 'China, Hong Kong SAR', 'China, Macao SAR', 'Colombia', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czechia', 'Denmark', 'Dominican Republic', 'Egypt', 'El Salvador', 'Estonia', 'Finland', 'France', 'Georgia', 'Germany', 'Greece', 'Guam', 'Guatemala', 'Hungary', 'India', 'Indonesia', 'Iran (Islamic Republic of)', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kuwait', "Lao People's Dem. Rep.", 'Latvia', 'Lebanon', 'Lithuania', 'Malaysia', 'Malta', 'Mexico', 'Morocco', 'Mozambique', 'Netherlands', 'New Zealand', 'Nicaragua', 'Norway', 'Other non-specified areas', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Puerto Rico', 'Republic of Korea', 'Romania', 'Russian Federation', 'Saudi Arabia', 'Singapore', 'Slovenia', 'South Africa', 'Spain', 'Sweden', 'Switzerland', 'Thailand', 'Tunisia', 'Turkey', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States of America', 'Uruguay', 'Viet Nam', 'Zimbabwe']
 # b = []
 # # print(NameCountries())
 # SortForCountries(NameCountries())
+
+# config['list_of_countries'] = b.copy()
+# with open('config.json', 'w') as json_file:
+#     json.dump(config, json_file, indent=2)
 # for i in a:
 #     config['list_of_countries'].append(i)
-# config['list_of_countries'] = b.copy()
+#
 # with open('config.json', 'w') as json_file:
 #     json.dump(config, json_file, indent=2)
