@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axisartist.axislines import Subplot
 
 
-def SetSetting(year, amount_countries, i):
-    plt.title(label="Amount of tourists", loc='left', fontsize=20, fontweight='bold')
+def SetSetting(year, title, i):
+    plt.title(label=title, loc='left', fontsize=20, fontweight='bold')
     #ax.set_title(label="Title", pad=-1, fontsize=16, loc='left')
     ax.axis([0, (i + 10000) / 1000, 0.5, count_countries + 0.5])
     ax.set_xlabel(year, x=0.95, fontsize=40, fontweight='bold', color='red')
@@ -23,7 +23,6 @@ def SetSetting(year, amount_countries, i):
     # y_low, y_high = ax.get_ylim()
     # x_right += 50
     # ax.set_aspect(abs((x_right - x_left) / (y_low - y_high)) * ratio)
-    #ax.set_aspect('auto', adjustable='datalim')
 
 
 def SortDescending(array_amount):
@@ -58,6 +57,8 @@ with open('config.json', 'r') as json_file:
     seconds = config['seconds']
     colors = config['colors']
     count_countries = config['count_countries']
+    language = config['language']
+    language_selection = config['language_selection']
 
 time_shot = round(1 / fps, 3)
 data = data_base.SortYears()
@@ -71,7 +72,7 @@ last_year, speed_amount, list_y_cord = [0 for i in range(len(data))], [0 for i i
 
 
 fig = plt.figure()
-fig.set_size_inches(6.5, 8)
+fig.set_size_inches(8, 10)
 ax = Subplot(fig, 111)
 
 a = []
@@ -97,7 +98,7 @@ for shot in range(fps * seconds):
     if shot == 0:
         now_list_x_cord = true_list_x_cord.copy()
 
-    SetSetting(passed_years + min_year, len(data), max(list_y_cord))
+    SetSetting(passed_years + min_year, language_selection[language]['title'], max(list_y_cord))
 
     for num_country in range(len(data)):
         if abs(now_list_x_cord[num_country] - true_list_x_cord[num_country]) < 0.05:
@@ -113,7 +114,8 @@ for shot in range(fps * seconds):
             plt.text((list_y_cord[num_country] + 1000) / 1000, now_list_x_cord[num_country] + 1,
                      srt_num, fontsize=9)
             plt.text(-0.5, now_list_x_cord[num_country] + 1,
-                     data_base.list_of_countries[num_country], fontsize=10, horizontalalignment='right')
+                     language_selection[language][data_base.list_of_countries[num_country]]
+                     , fontsize=10, horizontalalignment='right')
             if not data_base.list_of_countries[num_country] in a:
                 a.append(data_base.list_of_countries[num_country])
 
@@ -126,6 +128,7 @@ plt.show()
 plt.pause(2)
 plt.close()
 
+print(a)
 # b = []
 # # print(NameCountries())
 # SortForCountries(NameCountries())
