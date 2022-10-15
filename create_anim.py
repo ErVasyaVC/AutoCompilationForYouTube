@@ -112,16 +112,16 @@ for shot in range(fps * seconds):
             plt.barh(now_list_x_cord[num_country] + 1, list_y_cord[num_country] / 1000, color=colors[num_country],
                      alpha=0.7)
             plt.text((list_y_cord[num_country] + 1000) / 1000, now_list_x_cord[num_country] + 1,
-                     srt_num, fontsize=9)
+                     srt_num, fontsize=11)
             plt.text(-0.5, now_list_x_cord[num_country] + 1,
                      language_selection[language][data_base.list_of_countries[num_country]]
-                     , fontsize=9, horizontalalignment='right')
+                     , fontsize=11, horizontalalignment='right')
             # if not data_base.list_of_countries[num_country] in a:
             #     a.append(data_base.list_of_countries[num_country])
 
     passed_years = round(float_year // 1)
     float_year += speed_year
-    plt.savefig('images/filename' + str(shot) + '.png', dpi=200)
+    #plt.savefig('imagesEng/filename' + str(shot) + '.png', dpi=200)
     plt.pause(0.01)
 plt.show()
 plt.pause(2)
