@@ -37,7 +37,10 @@ def SortForCountries(countries):
         for year in data_frame[data_frame[columns[0]] == i][columns[1]]:
             years.append(int(year))
         for count in data_frame[data_frame[columns[0]] == i][columns[2]]:
-            amount.append(int(count.split(',')[0] + count.split(',')[1]))
+            if "," in count:
+                amount.append(int(count.split(',')[0] + count.split(',')[1]))
+            else:
+                amount.append(int(count))
         years_countries.append([years, amount])
     return years_countries
 
