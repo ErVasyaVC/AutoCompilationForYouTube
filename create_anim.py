@@ -5,7 +5,8 @@ from mpl_toolkits.axisartist.axislines import Subplot
 
 
 def SetSetting(year, title, i):
-    plt.title(label=title, loc='left', fontsize=20, fontweight='bold')
+    img = plt.imread("flag_EU.jpg")
+    plt.title(label=title, loc='left', fontsize=30, fontweight='bold')
     # ax.set_title(label="Title", pad=-1, fontsize=16, loc='left')
     ax.axis([0, (i + 1000) / 1000, 0.5, count_countries + 0.5])
     ax.set_xlabel(year, x=0.95, fontsize=40, fontweight='bold', color='red')
@@ -70,6 +71,7 @@ speed_rearrangement = 0.1
 last_year, speed_amount, list_y_cord = [0 for i in range(len(data))], [0 for i in range(len(data))], \
                                        [0 for i in range(len(data))]
 
+viewing_mode = False
 
 fig = plt.figure()
 fig.set_size_inches(10, 12)
@@ -111,17 +113,18 @@ for shot in range(fps * seconds):
         if now_list_x_cord[num_country] + 1 <= count_countries + 0.5:
             plt.barh(now_list_x_cord[num_country] + 1, list_y_cord[num_country] / 1000, color=colors[num_country],
                      alpha=0.7)
-            plt.text((list_y_cord[num_country] + 1000) / 1000, now_list_x_cord[num_country] + 1,
-                     srt_num, fontsize=11)
-            plt.text(-0.5, now_list_x_cord[num_country] + 1,
+            plt.text((list_y_cord[num_country] + 400) / 1000, now_list_x_cord[num_country] + 1,
+                     srt_num, fontsize=13)
+            plt.text(-0.2, now_list_x_cord[num_country] + 1,
                      language_selection[language][data_base.list_of_countries[num_country]]
-                     , fontsize=11, horizontalalignment='right')
+                     , fontsize=14, horizontalalignment='right')
             # if not data_base.list_of_countries[num_country] in a:
             #     a.append(data_base.list_of_countries[num_country])
 
     passed_years = round(float_year // 1)
     float_year += speed_year
-    #plt.savefig('imagesEng/filename' + str(shot) + '.png', dpi=200)
+    if not viewing_mode:
+        plt.savefig('images/touristEU/imagesEng/shot' + str(shot) + '.png', dpi=200)
     plt.pause(0.01)
 plt.show()
 plt.pause(2)
